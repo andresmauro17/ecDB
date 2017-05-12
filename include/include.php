@@ -6,8 +6,9 @@ class ShowComponents {
 		include('mysql_connect.php');
 
 		$owner = $_SESSION['SESS_MEMBER_ID'];
+		$is_admin = $_SESSION['SESS_IS_ADMIN'];
 		//$qry = "SELECT id, name, category, package, pins, datasheet, url1, smd, price, quantity, comment, bin_location FROM data WHERE owner = ".$owner." ORDER by ";
-		$qry = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location, c.`name` as nx, sc.subcategory as snx, sc.category_id as scid FROM data d, category c, category_sub sc WHERE owner = ".$owner." and c.id = sc.category_id and d.category = sc.id ORDER by ";
+		$qry = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location, c.`name` as nx, sc.subcategory as snx, sc.category_id as scid FROM data d, category c, category_sub sc WHERE c.id = sc.category_id and d.category = sc.id ORDER by ";
 
 		if(isset($_GET['by']))
 		{
@@ -49,7 +50,7 @@ class ShowComponents {
 			echo "<tr>";
 
 			echo '<td class="edit">';
-			if ($owner === $_SESSION['SESS_MEMBER_ID'])
+			if ($is_admin === $_SESSION['SESS_IS_ADMIN'])
 			{
 				echo '<a href="edit_component.php?edit='.$showDetails['id'].'"><span class="icon medium pencil"></span></a>';
 			}
@@ -177,6 +178,7 @@ class ShowComponents {
 		include('include/mysql_connect.php');
 
 		$owner = $_SESSION['SESS_MEMBER_ID'];
+		$is_admin = $_SESSION['SESS_IS_ADMIN'];
 
 		if(isset($_GET['cat']))
 		{
@@ -199,20 +201,20 @@ class ShowComponents {
 
 				if($by == 'price' or $by == 'pins' or $by == 'quantity')
 				{
-					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.category_id = ".$cat." AND owner = ".$owner." ORDER by ".$by." +0 ".$order."";
+					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.category_id = ".$cat." ORDER by ".$by." +0 ".$order."";
 				}
 				elseif($by == 'name' or $by == 'category' or $by =='package' or $by =='smd')
 				{
-					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.category_id = ".$cat." AND owner = ".$owner." ORDER by ".$by." ".$order."";
+					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.category_id = ".$cat." ORDER by ".$by." ".$order."";
 				}
 				else
 				{
-					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.category_id = ".$cat." AND owner = ".$owner." ORDER by name ASC";
+					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.category_id = ".$cat." ORDER by name ASC";
 				}
 			}
 			else
 			{
-				$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.category_id = ".$cat." AND owner = ".$owner." ORDER by name ASC";
+				$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.category_id = ".$cat." ORDER by name ASC";
 			}
 
 			$sql_exec_component = mysqli_query($GLOBALS["___mysqli_ston"], $ComponentsCategory);
@@ -221,7 +223,7 @@ class ShowComponents {
 				echo "<tr>";
 
 				echo '<td class="edit">';
-				if ($owner === $_SESSION['SESS_MEMBER_ID'])
+				if ($is_admin === $_SESSION['SESS_IS_ADMIN'])					
 				{
 					echo '<a href="edit_component.php?edit='.$showDetails['id'].'"><span class="icon medium pencil"></span></a>';
 				}
@@ -372,17 +374,17 @@ class ShowComponents {
 				}
 
 				if($by == 'price' or $by == 'pins' or $by == 'quantity') {
-					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.id = ".$subcat." AND owner = ".$owner." ORDER by ".$by." +0 ".$order."";
+					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.id = ".$subcat." ORDER by ".$by." +0 ".$order."";
 				}
 				elseif($by == 'name' or $by == 'category' or $by =='package' or $by =='smd') {
-					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.id = ".$subcat." AND owner = ".$owner." ORDER by ".$by." ".$order."";
+					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.id = ".$subcat." ORDER by ".$by." ".$order."";
 				}
 				else {
-					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.id = ".$subcat." AND owner = ".$owner." ORDER by name ASC";
+					$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.id = ".$subcat." ORDER by name ASC";
 				}
 			}
 			else {
-				$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.id = ".$subcat." AND owner = ".$owner." ORDER by name ASC";
+				$ComponentsCategory = "SELECT d.id, d.name, d.category, d.package, d.pins, d.datasheet, d.url1, d.smd, d.price, d.quantity, d.comment, d.bin_location FROM data d, category_sub c WHERE d.category = c.id and c.id = ".$subcat." ORDER by name ASC";
 			}
 
 			$sql_exec_component = mysqli_query($GLOBALS["___mysqli_ston"], $ComponentsCategory);
@@ -391,7 +393,7 @@ class ShowComponents {
 				echo "<tr>";
 
 				echo '<td class="edit">';
-				if ($owner === $_SESSION['SESS_MEMBER_ID'])
+				if ($is_admin === $_SESSION['SESS_IS_ADMIN'])
 				{
 					echo '<a href="edit_component.php?edit='.$showDetails['id'].'"><span class="icon medium pencil"></span></a>';
 				}
@@ -525,6 +527,7 @@ class ShowComponents {
 			include('include/mysql_connect.php');
 
 			$owner = $_SESSION['SESS_MEMBER_ID'];
+			$is_admin = $_SESSION['SESS_IS_ADMIN'];
 
 			$query = mysqli_real_escape_string($GLOBALS["___mysqli_ston"], $_GET['q']);
 			$query1 = strtoupper($query);
@@ -555,19 +558,19 @@ class ShowComponents {
 
 					if($by == 'price' or $by == 'pins' or $by == 'quantity')
 					{
-						$SearchQuery = "SELECT * FROM data WHERE (name LIKE'%$find%' OR package LIKE'%$find%' OR manufacturer LIKE'%$find%' OR pins LIKE'%$find%' OR location LIKE'%$find%' OR comment LIKE'%$find%') AND owner = $owner ORDER by $by +0 $order";
+						$SearchQuery = "SELECT * FROM data WHERE (name LIKE'%$find%' OR package LIKE'%$find%' OR manufacturer LIKE'%$find%' OR pins LIKE'%$find%' OR location LIKE'%$find%' OR comment LIKE'%$find%') ORDER by $by +0 $order";
 					}
 					elseif($by == 'name' or $by == 'category' or $by =='package' or $by =='smd' or $by =='manufacturer') {
-						$SearchQuery = "SELECT * FROM data WHERE (name LIKE'%$find%' OR package LIKE'%$find%' OR manufacturer LIKE'%$find%' OR pins LIKE'%$find%' OR location LIKE'%$find%' OR comment LIKE'%$find%') AND owner = $owner ORDER by $by $order";
+						$SearchQuery = "SELECT * FROM data WHERE (name LIKE'%$find%' OR package LIKE'%$find%' OR manufacturer LIKE'%$find%' OR pins LIKE'%$find%' OR location LIKE'%$find%' OR comment LIKE'%$find%') ORDER by $by $order";
 					}
 					else
 					{
-						$SearchQuery = "SELECT * FROM data WHERE (name LIKE'%$find%' OR package LIKE'%$find%' OR manufacturer LIKE'%$find%' OR pins LIKE'%$find%' OR location LIKE'%$find%' OR comment LIKE'%$find%') AND owner = $owner ORDER by name ASC";
+						$SearchQuery = "SELECT * FROM data WHERE (name LIKE'%$find%' OR package LIKE'%$find%' OR manufacturer LIKE'%$find%' OR pins LIKE'%$find%' OR location LIKE'%$find%' OR comment LIKE'%$find%') ORDER by name ASC";
 					}
 				}
 				else
 				{
-					$SearchQuery = "SELECT * FROM data WHERE (name LIKE'%$find%' OR package LIKE'%$find%' OR manufacturer LIKE'%$find%' OR pins LIKE'%$find%' OR location LIKE'%$find%' OR comment LIKE'%$find%') AND owner = $owner ORDER by name ASC";
+					$SearchQuery = "SELECT * FROM data WHERE (name LIKE'%$find%' OR package LIKE'%$find%' OR manufacturer LIKE'%$find%' OR pins LIKE'%$find%' OR location LIKE'%$find%' OR comment LIKE'%$find%') ORDER by name ASC";
 				}
 
 				$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $SearchQuery);
@@ -581,8 +584,8 @@ class ShowComponents {
 				while($showDetails = mysqli_fetch_array($sql_exec)) {
 					echo "<tr>";
 
-					echo '<td class="edit">';
-					if ($owner === $_SESSION['SESS_MEMBER_ID'])
+					echo '<td class="edit">';					
+					if ($is_admin === $_SESSION['SESS_IS_ADMIN'])
 					{
 						echo '<a href="edit_component.php?edit='.$showDetails['id'].'"><span class="icon medium pencil"></span></a>';
 					}
@@ -715,8 +718,8 @@ class ShowComponents {
 		include('include/mysql_connect.php');
 
 		if(isset($_POST['submit']) or isset($_POST['update'])) {
-			$owner				=	$_SESSION['SESS_MEMBER_ID'];
-
+			$owner = $_SESSION['SESS_MEMBER_ID'];
+			$is_admin = $_SESSION['SESS_IS_ADMIN'];
 			if (empty($_GET['edit'])) {
 				$id				=	'';
 			}
