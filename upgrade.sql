@@ -81,3 +81,21 @@ alter table `data` add column `bin_location` varchar(64) NOT NULL default "";
 
 alter table `data` drop column `public`;
 
+
+drop table track_data;
+CREATE TABLE track_data(
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  who INT(11) NOT NULL,`track_data`
+  data_id INT(11) NOT NULL,
+  `name` VARCHAR(64) NULL DEFAULT NULL,
+  past_quantity VARCHAR(11) NOT NULL,
+  actual_quantity VARCHAR(11) NOT NULL,
+  `past_price` VARCHAR(11) NOT NULL,
+  `actual_price` VARCHAR(11) NOT NULL,
+  `past_order_quantity` VARCHAR(11) NOT NULL,
+  `_actual_order_quantity` VARCHAR(11) NOT NULL,
+  was_deleted INT(11) NULL DEFAULT '0',
+  was_created INT(11) NULL DEFAULT '0',
+  date_operation TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)ENGINE=INNODB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8

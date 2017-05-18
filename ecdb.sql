@@ -283,3 +283,23 @@ INSERT INTO `admin_options` (`admin_key`, `admin_value`) VALUES ('register_tab_s
 -- INSERT INTO `admin_options` (`admin_key`, `admin_value`) VALUES ('pubcomponents_tab_show', '0');
 -- donation tab, if your running a public site, maybe leave this on
 INSERT INTO `admin_options` (`admin_key`, `admin_value`) VALUES ('donate_tab_show', '1');
+
+
+
+DROP TABLE IF EXISTS `track_data`;
+CREATE TABLE `track_data`(
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  who INT(11) NOT NULL,
+  data_id INT(11) NOT NULL,
+  `name` VARCHAR(64) NULL DEFAULT NULL,
+  past_quantity VARCHAR(11) NOT NULL,
+  actual_quantity VARCHAR(11) NOT NULL,
+  `past_price` VARCHAR(11) NOT NULL,
+  `actual_price` VARCHAR(11) NOT NULL,
+  `past_order_quantity` VARCHAR(11) NOT NULL,
+  `_actual_order_quantity` VARCHAR(11) NOT NULL,
+  was_deleted INT(11) NULL DEFAULT '0',
+  was_created INT(11) NULL DEFAULT '0',
+  date_operation TIMESTAMP NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)ENGINE=INNODB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8;
