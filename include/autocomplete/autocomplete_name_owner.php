@@ -6,7 +6,7 @@ if (!$q) return;
 $owner = $_GET['memberID'];
 if(!$owner) return;
 
-$sql = "select DISTINCT name as name from data where name LIKE '%$q%' and owner='".$owner."' ORDER by name ASC";
+$sql = "select DISTINCT name as name from data where name LIKE '%$q%'";
 $rsd = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
 while($rs = mysqli_fetch_array($rsd))
 {

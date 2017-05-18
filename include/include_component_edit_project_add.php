@@ -12,12 +12,12 @@ class AddMenuProj {
 		echo ' - Project - ';
 		echo '</option>';
 		
-		$GetDataProject = "SELECT * FROM projects WHERE project_owner = '$owner'";
+		$GetDataProject = "SELECT * FROM projects";
 		$sql = mysqli_query($GLOBALS["___mysqli_ston"], $GetDataProject);
 		
 		while($row1 = mysqli_fetch_array($sql)){
 		
-			$query1 = "SELECT projects_data.projects_data_project_id, projects_data.projects_data_component_id FROM projects_data RIGHT JOIN projects ON projects.project_id = projects_data.projects_data_project_id WHERE projects.project_owner = '$owner'";
+			$query1 = "SELECT projects_data.projects_data_project_id, projects_data.projects_data_component_id FROM projects_data RIGHT JOIN projects ON projects.project_id = projects_data.projects_data_project_id";
 	 
 			$result1 = mysqli_query($GLOBALS["___mysqli_ston"], $query1);
 			

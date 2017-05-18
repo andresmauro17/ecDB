@@ -17,15 +17,15 @@ class Shoplist {
 
 			if($by == 'price' or $by == 'pins' or $by == 'quantity') {
 
-				$GetDataComponentsAll = "SELECT * FROM data WHERE owner = ".$owner." AND order_quantity > 0 ORDER by ".$bysql." +0 ".$ordersql."";
+				$GetDataComponentsAll = "SELECT * FROM data WHERE order_quantity > 0 ORDER by ".$bysql." +0 ".$ordersql."";
 			}
 			else {
 
-				$GetDataComponentsAll = "SELECT * FROM data WHERE owner = ".$owner." AND order_quantity > 0 ORDER by ".$bysql." ".$ordersql."";
+				$GetDataComponentsAll = "SELECT * FROM data WHERE order_quantity > 0 ORDER by ".$bysql." ".$ordersql."";
 			}
 		}
 		else {
-			$GetDataComponentsAll = "SELECT * FROM data WHERE owner = ".$owner." AND order_quantity > 0 ORDER by name ASC";
+			$GetDataComponentsAll = "SELECT * FROM data WHERE order_quantity > 0 ORDER by name ASC";
 		}
 
 

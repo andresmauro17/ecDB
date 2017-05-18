@@ -41,7 +41,7 @@ class NameSub {
 			}
 
 			// Shows if component exists in category
-			$sql_exec_component_catname = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT category FROM data WHERE owner = $owner"); // Get the category ID from all components.
+			$sql_exec_component_catname = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT category FROM data"); // Get the category ID from all components.
 			while($showDetailsComponentCatname = mysqli_fetch_array($sql_exec_component_catname)) {
 				if($showDetailsComponentCatname['category'] == $ShowDetailsSubCatname['id']){ // Compare current category ID with components category ID.
 					echo ' class="isComponents"'; // What should be echoed if components exists in category?

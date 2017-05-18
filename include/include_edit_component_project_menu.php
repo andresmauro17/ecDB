@@ -8,10 +8,10 @@ class AddMenuProj {
 		$owner	=	$_SESSION['SESS_MEMBER_ID'];
 		$id 	= 	(int)$_GET['edit'];
 
-		$ProjectNameQuery = "SELECT * FROM projects WHERE project_owner = ".$owner." ORDER by project_name ASC";
+		$ProjectNameQuery = "SELECT * FROM projects ORDER by project_name ASC";
 		$sql_exec_projname = mysqli_query($GLOBALS["___mysqli_ston"], $ProjectNameQuery);
 
-		$CategoryName = "SELECT * FROM projects_data WHERE component_id = ".$id." AND owner_id = ".$owner."";
+		$CategoryName = "SELECT * FROM projects_data WHERE component_id = ".$id;
 		$sql_exec_catname = mysqli_query($GLOBALS["___mysqli_ston"], $CategoryName);
 
 		while ($Project = mysqli_fetch_array($sql_exec_projname)) {

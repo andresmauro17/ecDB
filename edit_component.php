@@ -12,9 +12,6 @@
 	$GetPersonal = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT currency, measurement FROM members WHERE member_id = ".$owner."");
 	$personal = mysqli_fetch_array($GetPersonal);
 
-	if ($executesql['owner'] !== $owner) {
-		header("Location: error.php?id=2");
-	}
 
 	$cat_id = $executesql['category'];
 

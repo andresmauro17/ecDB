@@ -66,7 +66,7 @@ class NameHead {
 			}
 
 			// Shows if component exists in category.
-			$sql_exec_component_catname = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT category FROM data WHERE owner = ".$owner.""); // Get the category ID from all components.
+			$sql_exec_component_catname = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT category FROM data"); // Get the category ID from all components.
 			while($showDetailsComponentCatname = mysqli_fetch_array($sql_exec_component_catname))
 			{
 				// Converts components sub category id to it's head category id.

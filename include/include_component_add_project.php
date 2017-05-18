@@ -7,7 +7,7 @@ class AddMenuProj {
 
 		$owner	=	$_SESSION['SESS_MEMBER_ID'];
 
-		$ProjectNameQuery = "SELECT * FROM projects WHERE project_owner = ".$owner." ORDER by project_name ASC";
+		$ProjectNameQuery = "SELECT * FROM projects ORDER by project_name ASC";
 		$sql_exec_projname = mysqli_query($GLOBALS["___mysqli_ston"], $ProjectNameQuery);
 
 		echo '<option class="main_category" value="">';
