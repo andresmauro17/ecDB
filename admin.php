@@ -68,6 +68,12 @@
 									<button class="button green" type="submit"><span class="icon medium user"></span> List Users</button>
 								</form>
 								</td>
+								<td>
+								<form action="track_data.php" method="post">
+									<button class="button green" type="submit"><span class="icon medium cube"></span> kardex</button>
+								</form>
+								</td>
+
 
 								</tr>
 							</div>
