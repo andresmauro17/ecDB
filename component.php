@@ -25,10 +25,10 @@
 	}
 
 	if(isset($_POST['delete'])) {
-		$name =	$_POST['name'];
-		$quantity=	$_POST['quantity'];		
-		$price=$_POST['price'];
-		$order_quantity=$_POST['orderquant'];
+		$name =	$executesql['name'];
+		$quantity=	$executesql['quantity'];		
+		$price=$executesql['price'];
+		$order_quantity=$executesql['order_quantity'];
 
 		$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
 			VALUES 
@@ -54,17 +54,32 @@
 	if (isset($_POST['quantity_increase'])) {
 		$quantity_before	=	$executesql['quantity'];
 		$quantity_after		= 	$quantity_before + 1;
-
+		$name =	$executesql['name'];
 		$sql = "UPDATE data SET quantity = '".$quantity_after."' WHERE id = ".$id." ";
+
+
 		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+
+		$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+		VALUES 
+		('$owner','$id','$name','$quantity_before','$quantity_after',".$executesql['price'].",".$executesql['price'].",".$executesql['order_quantity'].",".$executesql['order_quantity'].",'0','0','1');";
+
+		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+
 		header("location: " . $_SERVER['REQUEST_URI']);
 	}
 
 	if (isset($_POST['quantity_decrease'])) {
 		$quantity_before	=	$executesql['quantity'];
 		$quantity_after 	= 	$quantity_before - 1;
+		$name =	$executesql['name'];
 
 		$sql = "UPDATE data SET quantity = '".$quantity_after."' WHERE id = ".$id." ";
+		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+
+		$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+		VALUES 
+		('$owner','$id','$name','$quantity_before','$quantity_after',".$executesql['price'].",".$executesql['price'].",".$executesql['order_quantity'].",".$executesql['order_quantity'].",'0','0','1');";
 		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
 		header("location: " . $_SERVER['REQUEST_URI']);
 	}
@@ -72,17 +87,28 @@
 	if (isset($_POST['orderquant_increase'])) {
 		$quantity_before	=	$executesql['order_quantity'];
 		$quantity_after		= 	$quantity_before + 1;
+		$name =	$executesql['name'];
 
 		$sql = "UPDATE data SET order_quantity = '".$quantity_after."' WHERE id = ".$id." ";
 		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+
+		$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+		VALUES 
+		('$owner','$id','$name',".$executesql['quantity'].",".$executesql['quantity'].",".$executesql['price'].",".$executesql['price'].",".$quantity_before.",".$quantity_after.",'0','0','1');";
+		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+
 		header("location: " . $_SERVER['REQUEST_URI']);
 	}
 
 	if (isset($_POST['orderquant_decrease'])) {
 		$quantity_before	=	$executesql['order_quantity'];
 		$quantity_after 	= 	$quantity_before - 1;
-
+		$name =	$executesql['name'];
 		$sql = "UPDATE data SET order_quantity = '".$quantity_after."' WHERE id = ".$id." ";
+		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+		$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+		VALUES 
+		('$owner','$id','$name',".$executesql['quantity'].",".$executesql['quantity'].",".$executesql['price'].",".$executesql['price'].",".$quantity_before.",".$quantity_after.",'0','0','1');";
 		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
 		header("location: " . $_SERVER['REQUEST_URI']);
 	}
