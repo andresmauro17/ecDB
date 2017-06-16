@@ -1,6 +1,7 @@
 <?php
 	include_once("include/version.php");
 	include_once("include/include_parse_admin_options.php");
+	
 ?>
 <div id="header">
 
