@@ -853,6 +853,21 @@ class ShowComponents {
 					$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql) or die(((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false)));
 					$component_id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
 
+					
+
+
+					$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+						VALUES 
+						('$owner','$component_id','$name',0,'$quantity',0,'$price',0,'$order_quantity','0','1','0');";
+
+
+					$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+
+
+
+
+
+
 					if (!empty($project) && !empty($project_quantity)) {
 						$proj_add="INSERT into projects_data (projects_data_owner_id, projects_data_project_id, projects_data_component_id, projects_data_quantity)
 							VALUES
@@ -902,6 +917,31 @@ class ShowComponents {
 
 					$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
 
+
+					
+					$quantity_before	= $_POST['quantity_before'];
+					$quantity_after=$quantity;
+
+					$price_before	= $_POST['price_before'];
+					$price_after=$price;
+
+					$order_quanty_before	= $_POST['orderquant_before'];
+					$order_quanty_after=$order_quantity;
+
+					if ($quantity_before != $quantity_after or $price_before != $price_after or $order_quanty_before != $order_quanty_after ) {
+
+						$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+						VALUES 
+						('$owner','$id','$name','$quantity_before','$quantity_after','$price_before','$price_after','$order_quanty_before','$order_quanty_after','0','0','1');";
+
+
+
+						$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+						
+					}
+
+					
+
 					if (!empty($project) && !empty($project_quantity)) {
 						$proj_add="INSERT into projects_data (projects_data_owner_id, projects_data_project_id, projects_data_component_id, projects_data_quantity)
 							VALUES
@@ -947,7 +987,7 @@ class ShowComponents {
 							}
 						}
 					}
-					//header("location: " . $_SERVER['REQUEST_URI']);
+					header("location: " . $_SERVER['REQUEST_URI']);
 				}
 			}
 		}

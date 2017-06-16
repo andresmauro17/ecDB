@@ -289,7 +289,7 @@ INSERT INTO `admin_options` (`admin_key`, `admin_value`) VALUES ('donate_tab_sho
 DROP TABLE IF EXISTS `track_data`;
 CREATE TABLE `track_data`(
   id INT(11) NOT NULL AUTO_INCREMENT,
-  who INT(11) NOT NULL,
+  who_id INT(11) NOT NULL,
   data_id INT(11) NOT NULL,
   `name` VARCHAR(64) NULL DEFAULT NULL,
   past_quantity VARCHAR(11) NOT NULL,
@@ -297,9 +297,19 @@ CREATE TABLE `track_data`(
   `past_price` VARCHAR(11) NOT NULL,
   `actual_price` VARCHAR(11) NOT NULL,
   `past_order_quantity` VARCHAR(11) NOT NULL,
-  `_actual_order_quantity` VARCHAR(11) NOT NULL,
+  `actual_order_quantity` VARCHAR(11) NOT NULL,
   was_deleted INT(11) NULL DEFAULT '0',
   was_created INT(11) NULL DEFAULT '0',
-  date_operation TIMESTAMP NULL DEFAULT NULL,
+  was_updated INT(11) NULL DEFAULT '0',
+  date_operation TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 )ENGINE=INNODB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8;
+
+
+
+INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated,date_operation)
+VALUES ('1800','2','SN74LS138N DECODER/DEMUX 16-DIP','35','36','0.13','0.13','0','10','0','0','1','2017-03-28 21:35:00');
+
+$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated,date_operation)
+    VALUES ('1800','2','SN74LS138N DECODER/DEMUX 16-DIP','35','36','0.13','0.13','0','10','0','0','1','2017-03-28 21:35:00');";
+    $sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);

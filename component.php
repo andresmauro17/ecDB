@@ -25,6 +25,19 @@
 	}
 
 	if(isset($_POST['delete'])) {
+		$name =	$_POST['name'];
+		$quantity=	$_POST['quantity'];		
+		$price=$_POST['price'];
+		$order_quantity=$_POST['orderquant'];
+
+		$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+			VALUES 
+			('$owner','$id','$name','$quantity','$quantity','$price','$price','$order_quantity','$order_quantity','1','0','0');";
+
+
+		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+		
+
 		$sqlDeleteComopnent = "DELETE FROM data WHERE id = ".$id." ";
 		$sql_exec_component_delete = mysqli_query($GLOBALS["___mysqli_ston"], $sqlDeleteComopnent);
 

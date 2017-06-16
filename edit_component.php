@@ -19,7 +19,19 @@
 	$executesql_head_catname = mysqli_fetch_assoc($GetHeadCatName);
 
 	if(isset($_POST['delete']))
-	{
+	{	
+		$name =	$_POST['name'];
+		$quantity=	$_POST['quantity'];		
+		$price=$_POST['price'];
+		$order_quantity=$_POST['orderquant'];
+
+		$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+			VALUES 
+			('$owner','$id','$name','$quantity','$quantity','$price','$price','$order_quantity','$order_quantity','1','0','0');";
+
+
+		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+
 		$sqlDeleteComopnent = "DELETE FROM data WHERE id = ".$id." ";
 		$sql_exec_component_delete = mysqli_query($GLOBALS["___mysqli_ston"], $sqlDeleteComopnent);
 
@@ -38,9 +50,20 @@
 	{
 		$quantity_before	=	$_POST['quantity'];
 		$quantity_after		= 	$quantity_before + 1;
-
+		$name =	$_POST['name'];
 		$sql = "UPDATE data SET quantity = '".$quantity_after."' WHERE id = ".$id." ";
+	
+
 		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+
+	
+		$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+		VALUES 
+		('$owner','$id','$name','$quantity_before','$quantity_after',".$_POST['price'].",".$_POST['price'].",".$_POST['orderquant'].",".$_POST['orderquant'].",'0','0','1');";
+
+		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
+
+
 		header("location: " . $_SERVER['REQUEST_URI']);
 	}
 
@@ -48,30 +71,51 @@
 	{
 		$quantity_before	=	$_POST['quantity'];
 		$quantity_after 	= 	$quantity_before - 1;
-
+		$name =	$_POST['name'];
 		$sql = "UPDATE data SET quantity = '".$quantity_after."' WHERE id = ".$id." ";
 		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
 		header("location: " . $_SERVER['REQUEST_URI']);
+		
+		$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+		VALUES 
+		('$owner','$id','$name','$quantity_before','$quantity_after',".$_POST['price'].",".$_POST['price'].",".$_POST['orderquant'].",".$_POST['orderquant'].",'0','0','1');";
+
+		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
 	}
 
 	if (isset($_POST['orderquant_increase']))
 	{
 		$quantity_before	=	$_POST['orderquant'];
 		$quantity_after		= 	$quantity_before + 1;
+		$name =	$_POST['name'];
 
 		$sql = "UPDATE data SET order_quantity = '".$quantity_after."' WHERE id = ".$id." ";
 		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
 		header("location: " . $_SERVER['REQUEST_URI']);
+
+		
+		$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+		VALUES 
+		('$owner','$id','$name',".$_POST['quantity'].",".$_POST['quantity'].",".$_POST['price'].",".$_POST['price'].",".$quantity_before.",".$quantity_after.",'0','0','1');";
+
+		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
 	}
 
 	if (isset($_POST['orderquant_decrease']))
 	{
 		$quantity_before	=	$_POST['orderquant'];
 		$quantity_after 	= 	$quantity_before - 1;
+		$name =	$_POST['name'];
 
 		$sql = "UPDATE data SET order_quantity = '".$quantity_after."' WHERE id = ".$id." ";
 		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
 		header("location: " . $_SERVER['REQUEST_URI']);
+		
+		$sql = " INSERT INTO track_data (who_id,data_id,name,past_quantity,actual_quantity,past_price,actual_price,past_order_quantity,actual_order_quantity,was_deleted,was_created,was_updated)
+		VALUES 
+		('$owner','$id','$name',".$_POST['quantity'].",".$_POST['quantity'].",".$_POST['price'].",".$_POST['price'].",".$quantity_before.",".$quantity_after.",'0','0','1');";
+
+		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $sql);
 	}
 ?>
 <!DOCTYPE HTML>
@@ -172,6 +216,7 @@
 								</td>
 								<td>
 									<input name="quantity" type="text" class="small" value="<?php echo $executesql['quantity']; ?>" id="quantity"/>
+									<input type="hidden" name="quantity_before" type="text" value="<?php echo $executesql['quantity']; ?>" id="quantity"/>
 									<button class="button white small" name="quantity_increase" type="submit"><span class="icon medium roundPlus"></span></button>
 									<button class="button white small" name="quantity_decrease" type="submit"><span class="icon medium roundMinus"></span></button>
 								</td>
@@ -208,12 +253,16 @@
 								</td>
 								<td>
 									<input name="price" type="text" class="small" value="<?php echo $executesql['price']; ?>" id="price" /> <?php echo $personal['currency']; ?>
+
+									<input name="price_before" type="hidden" value="<?php echo $executesql['price']; ?>" id="price" />
+
 								</td>
 								<td class="boldText">
 									To order
 								</td>
 								<td>
 									<input name="orderquant" type="text" class="small" value="<?php echo $executesql['order_quantity']; ?>" id="orderquant"/>
+									<input name="orderquant_before" type="hidden" value="<?php echo $executesql['order_quantity']; ?>" id="orderquant"/>
 									<button class="button white small" name="orderquant_increase" type="submit"><span class="icon medium roundPlus"></span></button>
 									<button class="button white small" name="orderquant_decrease" type="submit"><span class="icon medium roundMinus"></span></button>
 								</td>
