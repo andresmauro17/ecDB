@@ -1,14 +1,29 @@
 <?php
 class ShowComponents {
-	public function Index()
-	{
+	public function Index($from, $to)
+	{	
+		$from=$from." 00:00:00";
+		$to=$to." 23:59:59";
+		echo "<h1>";
+			echo "movimientos en el inventario desde:";
+			echo $from;
+			echo "  ";
+			echo "hasta:  ";
+			echo $to;
+		echo "</h1>";
+
+		/*$from="2017-06-01 00:00:00";
+		$to="2017-06-01 23:59:59";*/
+
 		require_once('login/auth.php');
 		include('mysql_connect.php');
 
 		$owner = $_SESSION['SESS_MEMBER_ID'];
 		$is_admin = $_SESSION['SESS_IS_ADMIN'];
 		//$qry = "SELECT id, name, category, package, pins, datasheet, url1, smd, price, quantity, comment, bin_location FROM data WHERE owner = ".$owner." ORDER by ";
-		$qry = "SELECT d.id, d.who_id, d.data_id, d.name, d.past_quantity, d.actual_quantity, d.past_price, d.actual_price, d.past_order_quantity, d.actual_order_quantity, d.was_deleted, d.was_created, d.was_updated, d.date_operation FROM track_data d";
+		$qry = "SELECT d.id, d.who_id, d.data_id, d.name, d.past_quantity, d.actual_quantity, d.past_price, d.actual_price, d.past_order_quantity, d.actual_order_quantity, d.was_deleted, d.was_created, d.was_updated, d.date_operation FROM track_data d WHERE d.date_operation >= '".$from."' AND d.date_operation <= '".$to."'";
+
+		
 
 		$GetDataComponentsAll = $qry;
 		$sql_exec = mysqli_query($GLOBALS["___mysqli_ston"], $GetDataComponentsAll);

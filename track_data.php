@@ -18,6 +18,10 @@
 	$executesql['opt_register_tab_show'] = $opt_register_tab_show;
 	$executesql['opt_donate_tab_show'] = $opt_donate_tab_show;
 
+/*	if(isset($_POST['search']))
+	{	
+		header("location: " . $_SERVER['REQUEST_URI']);
+	}*/
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -54,30 +58,27 @@
 			<div id="content">
 				<div class="subMenu">
 
-					<form class="globalForms" method="post" action="">
+					<form class="globalForms" method="get" action="">
 
 						<div class="textInput">
-							<label class="keyWord">Project name</label>
-							<div class="input"><input name="init" id="datepicker" type="text" class="medium"/></div>
+							<label class="keyWord">desde</label>
+							<div class="input"><input name="from" id="datepicker" type="text" class="medium"/></div>
 						</div>
 
 						<div class="textInput">
-							<label class="keyWord">Project name</label>
-							<div class="input"><input name="init" id="datepicker2" type="text" class="medium"/></div>
+							<label class="keyWord">hasta</label>
+							<div class="input"><input name="to" id="datepicker2" type="text" class="medium"/></div>
 						</div>						
 						<div class="buttons">
 							<div class="input">
-								<button class="button green" name="submit" type="submit"><span class="icon medium eye"></span> ver</button>
+								<button class="button green" name="search" type="submit"></span>search</button>
 							</div>
+
+							
 						</div>
 					</form>
 
-				
-
-
-
 				</div>
-				<p>mundo</p>
 				<table class="globalTables" cellpadding="0" cellspacing="0">
 					<thead>
 						<tr>
@@ -129,19 +130,21 @@
 
 <!-- 
 							<th>
-								<a href="?by=name&order=<?php
-								if(isset($_GET['order'])){
-									$order = $_GET['order'];
-									if ($order == 'asc'){
-										echo 'desc';
+								<a href="?by=name&order=<?php	
+								
+									if(isset($_GET['order'])){
+										$order = $_GET['order'];
+										if ($order == 'asc'){
+											echo 'desc';
+										}
+										else {
+											echo 'asc';
+										}
 									}
 									else {
-										echo 'asc';
+										echo 'desc';
 									}
-								}
-								else {
-									echo 'desc';
-								}
+								
 								?>">Name</a>
 							</th>
 
@@ -154,12 +157,22 @@
 					<tbody>
 					<?php
 						include('include/include_track_data.php');
-
-						$Index = new ShowComponents;
-						$Index->Index();
+						if(isset($_GET['from']) and isset($_GET['to']))
+						{	
+							$Index = new ShowComponents;
+							$Index->Index($_GET['from'], $_GET['to']);
+						}
+						
 					?>
 					</tbody>
 				</table>
+
+				<!-- <form class="globalForms" method="post" action="include/include_track_data_csv.php">
+					<div class="input">
+						<button class="button green" name="BOM" type="submit"><span class="icon medium save"></span> Export Project BOM (.CSV)</button>
+					</div>
+				</form> -->
+
 			</div>
 	
 		</div>
