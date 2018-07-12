@@ -1,11 +1,7 @@
-
-
-
-
 <?php
 	session_start();
 	require_once('include/debug.php');
-	require_once('include/login/auth.php');
+
 	require_once('include/mysql_connect.php');
 	include_once("include/include_parse_admin_options.php");
 
